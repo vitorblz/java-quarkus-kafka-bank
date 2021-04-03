@@ -1,0 +1,8 @@
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: java-quarkus-kafka-bank
+  labels:
+    name: java-quarkus-kafka-bank
+    istio-injection: disabled
