@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: transaction-app
-          image: moduscreate/quarkus-transaction-service:v1
+          image: vitoroc/transaction-service
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
