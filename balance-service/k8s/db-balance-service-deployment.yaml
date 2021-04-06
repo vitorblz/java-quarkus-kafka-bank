@@ -1,0 +1,32 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: db-balance
+  namespace: java-quarkus-kafka-bank
+spec:
+  selector:
+    matchLabels:
+      app: db-balance
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: db-balance
+    spec:
+      containers:
+        - image: postgres:12.3-alpine
+          name: db-balance
+          env:
+            # Use secret in real usage
+            - name: POSTGRES_PASSWORD
+              value: balance_service
+            - name: POSTGRES_USER
+              value: balance_service
+            - name: POSTGRES_DB
+              value: balance_service
+            - name: PGPORT
+              value: "5432"
+          ports:
+            - containerPort: 5432
+              name: db-balance

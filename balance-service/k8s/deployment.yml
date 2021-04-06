@@ -5,43 +5,43 @@ metadata:
   namespace: java-quarkus-kafka-bank
 spec:
   ports:
-    - port: 8080
-      targetPort: 8080
+    - port: 8081
+      targetPort: 8081
       protocol: TCP
   type: NodePort
   selector:
-    app: balance-app
+    app: balance-service
     namespace: java-quarkus-kafka-bank
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: balance-app
+  name: balance-service
   namespace: java-quarkus-kafka-bank
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: balance-app
+      app: balance-service
       namespace: java-quarkus-kafka-bank
   template:
     metadata:
       labels:
-        app: balance-app
+        app: balance-service
         namespace: java-quarkus-kafka-bank
     spec:
       containers:
-        - name: balance-app
-          image: moduscreate/quarkus-balance-service:v1
-          imagePullPolicy: Always
+        - name: balance-service
+          image: vitoroc/balance-service:latest
+          imagePullPolicy: Never
           ports:
-            - containerPort: 8080
-          livenessProbe:
-            httpGet:
-              port: 8080
-              path: /balance-service/health/live
-          readinessProbe:
-            httpGet:
-              path: /balance-service/health/ready
-              port: 8080
+            - containerPort: 8081
+          # livenessProbe:
+          #   httpGet:
+          #     port: 8081
+          #     path: /balance-service/health/live
+          # readinessProbe:
+          #   httpGet:
+          #     path: /balance-service/health/ready
+          #     port: 8081

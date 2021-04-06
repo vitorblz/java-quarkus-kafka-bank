@@ -10,31 +10,31 @@ spec:
       protocol: TCP
   type: NodePort
   selector:
-    app: transaction-app
+    app: transaction-service
     namespace: java-quarkus-kafka-bank
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: transaction-app
+  name: transaction-service
   namespace: java-quarkus-kafka-bank
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: transaction-app
+      app: transaction-service
       namespace: java-quarkus-kafka-bank
   template:
     metadata:
       labels:
-        app: transaction-app
+        app: transaction-service
         namespace: java-quarkus-kafka-bank
     spec:
       containers:
-        - name: transaction-app
-          image: vitoroc/transaction-service
-          imagePullPolicy: Always
+        - name: transaction-service
+          image: vitoroc/transaction-service:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 8080
           livenessProbe:
